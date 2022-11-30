@@ -1,6 +1,6 @@
 export class AlunosModel {
-  id!:number;
-  nome!:string;
-  sobrenome!:string;
-  phone!:number
+  public id!:number;
+  public nome!:string;
+  public sobrenome!:string;
+  public phone!:number
 }

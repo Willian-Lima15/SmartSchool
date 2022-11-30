@@ -1,25 +1,25 @@
 <div *ngIf="profSelect">
   <div class="row">
-    <div class="col-sm-6">
-      <app-titulo [titulo]="'Professores: ' + profSelect"></app-titulo>
+    <div class="col-sm-11">
+      <app-titulo [titulo]="'Professores: ' + profSelect.nome"></app-titulo>
     </div>
-    <div class="col-sm-6 mt-2">
-      <button class="btn" (click)="voltar()">Voltar</button>
+    <div class="col-sm-1 mt-2">
+      <button class="btn btn-warning" (click)="voltar()">Voltar</button>
     </div>
   </div>
 
   <form class="form-group">
     <div>
       <label class="form-label">Nome</label>
-      <input type="text" class="form-control" />
+      <input type="text" class="form-control" [value]="profSelect.nome" />
     </div>
     <div>
       <label class="form-label">Disciplina</label>
-      <input type="text" class="form-control" />
+      <input type="text" class="form-control" [value]="profSelect.disciplina"/>
     </div>
     <div>
       <label class="form-label">Phone</label>
-      <input type="text" class="form-control" />
+      <input type="text" class="form-control" [value]="profSelect.phone" />
     </div>
   </form>
 </div>

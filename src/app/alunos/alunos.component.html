@@ -1,7 +1,7 @@
 <div *ngIf="alunoSelect">
   <div class="row">
     <div class="col-sm-11">
-      <app-titulo [titulo]="'Alunos: ' + alunoSelect"></app-titulo>
+      <app-titulo [titulo]="'Alunos: ' + alunoSelect.nome"></app-titulo>
     </div>
     <div class="col-sm-1 mt-2">
       <button class="btn btn-warning" (click)="voltar()">Voltar</button>
@@ -11,15 +11,15 @@
   <form class="form-group">
     <div>
       <label class="form-label">Nome</label>
-      <input type="text" class="form-control" />
+      <input type="text" class="form-control" [value]="alunoSelect.nome"/>
     </div>
     <div>
       <label class="form-label">Sobrenome</label>
-      <input type="text" class="form-control" />
+      <input type="text" class="form-control" [value]="alunoSelect.sobrenome"/>
     </div>
     <div>
       <label class="form-label">Phone</label>
-      <input type="text" class="form-control" />
+      <input type="text" class="form-control" [value]="alunoSelect.phone" />
     </div>
   </form>
 </div>
