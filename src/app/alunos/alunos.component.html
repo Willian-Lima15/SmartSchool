@@ -1,51 +1,76 @@
-<div *ngIf="alunoSelect">
-  <div class="row">
-    <div class="col-sm-11">
-      <app-titulo [titulo]="'Alunos: ' + alunoSelect.nome"></app-titulo>
+<div class="row">
+
+  <div class="col-sm-6" *ngIf="alunoSelect" (submit)="salvar()">
+    <div class="row">
+      <div class="col-sm-10">
+        <app-titulo [titulo]="'Alunos: ' + alunoSelect.nome"></app-titulo>
+      </div>
+      <div class="col-sm-2 mt-2 text-start">
+        <button class="btn btn-warning" (click)="voltar()">Voltar</button>
+      </div>
     </div>
-    <div class="col-sm-1 mt-2">
-      <button class="btn btn-warning" (click)="voltar()">Voltar</button>
-    </div>
+
+    <form [formGroup]="alunosForms" class="form-group">
+      <div>
+        <label class="form-label">Nome</label>
+        <input type="text" class="form-control" formControlName="nome"/>
+      </div>
+      <div>
+        <label class="form-label">Sobrenome</label>
+        <input type="text" class="form-control" formControlName="sobrenome"/>
+      </div>
+      <div>
+        <label class="form-label">Phone</label>
+        <input type="text" class="form-control" formControlName="phone"/>
+      </div>
+      <div class="form-group">
+        <hr>
+        <button class="btn btn-success" [disabled]="!alunosForms.valid">Enviar</button>
+      </div>
+    </form>
   </div>
 
-  <form class="form-group">
-    <div>
-      <label class="form-label">Nome</label>
-      <input type="text" class="form-control" [value]="alunoSelect.nome"/>
-    </div>
-    <div>
-      <label class="form-label">Sobrenome</label>
-      <input type="text" class="form-control" [value]="alunoSelect.sobrenome"/>
-    </div>
-    <div>
-      <label class="form-label">Phone</label>
-      <input type="text" class="form-control" [value]="alunoSelect.phone" />
-    </div>
-  </form>
+  <div [ngClass]="{'col-sm-12':false,'col-sm-6':alunoSelect}">
+    <app-titulo [titulo]="titulo"></app-titulo>
+    <table class="table table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Visualizar</th>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Sobrenome</th>
+          <th scope="col">Phone</th>
+          <th scope="col">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let aluno of alunos"
+        >
+          <th scope="row">
+            <button class="btn btn-warning ms-1" (click)="selectAluno(aluno)">Detalhe</button>
+          </th>
+          <td>{{ aluno.id }}</td>
+          <td>{{ aluno.nome }}</td>
+          <td>{{ aluno.sobrenome }}</td>
+          <td>{{ aluno.phone }}</td>
+          <td>
+            <button class="btn btn-outline-primary ms-1" (click)="openModal(template)">Professores</button>
+            <button class="btn btn-danger ms-1">Desativar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
-<div *ngIf="!alunoSelect">
-  <app-titulo [titulo]="titulo"></app-titulo>
-  <table class="table table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nome</th>
-        <th scope="col">Sobrenome</th>
-        <th scope="col">Phone</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let aluno of alunos"
-        style="cursor: pointer"
-        (click)="selectAluno(aluno)"
-      >
-        <th scope="row">{{ aluno.id }}</th>
-        <td>{{ aluno.nome }}</td>
-        <td>{{ aluno.sobrenome }}</td>
-        <td>{{ aluno.phone }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<ng-template #template>
+  <div class="modal-body">
+    <app-professores></app-professores>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+</ng-template>
