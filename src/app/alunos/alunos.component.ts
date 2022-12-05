@@ -1,3 +1,4 @@
+import { AlunoService } from './../core/services/aluno.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
@@ -14,15 +15,12 @@ export class AlunosComponent implements OnInit {
   alunoSelect!:AlunosModel;
   alunosForms!: FormGroup
 
-  alunos = [
-    {id:1 ,nome:'Willian', sobrenome: 'Pereira', phone:54548},
-    {id:2 ,nome:'Wlisses', sobrenome: 'Mota', phone:76846},
-    {id:3 ,nome:'Amariles', sobrenome: 'Souza',phone:98214},
-  ]
+  alunos!: AlunosModel[];
 
   modalRef?: BsModalRef;
   constructor(
     private fb: FormBuilder,
+    private alunoService: AlunoService,
     private modalService: BsModalService
   ) { }
 
@@ -31,6 +29,14 @@ export class AlunosComponent implements OnInit {
       nome:['',Validators.required],
       sobrenome:['',Validators.required],
       phone:['',Validators.required]
+    })
+  }
+
+  listaAlunos(){
+    this.alunoService.getAll().subscribe((res:any)=> {
+      console.log(res);
+
+      this.alunos = res
     })
   }
 
