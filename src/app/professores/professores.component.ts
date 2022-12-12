@@ -26,6 +26,7 @@ export class ProfessoresComponent implements OnInit {
 
   ngOnInit() {
     this.profForms = this.fb.group({
+      id:[''],
       nome:['',Validators.required],
       disciplina:['',Validators.required],
       phone:['',Validators.required]
@@ -36,6 +37,8 @@ export class ProfessoresComponent implements OnInit {
 
   carregaProf(){
     this.professorSerivice.getAll().subscribe((professor: ProfessoresModel[])=> {
+      console.log(professor);
+
       this.professores = professor
     })
   }

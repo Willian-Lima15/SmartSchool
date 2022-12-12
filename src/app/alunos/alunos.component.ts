@@ -36,10 +36,27 @@ export class AlunosComponent implements OnInit {
   listaAlunos(){
     this.alunoService.getAll().subscribe((res:any)=> {
       console.log(res);
-
       this.alunos = res
     })
   }
+
+//===================//==============
+  atualizar(aluno: AlunosModel){
+    this.alunoService.update(aluno.id, aluno).subscribe(
+      (res)=>{
+        console.log(res);
+        this.listaAlunos()
+      },
+      (error:any)=>{
+        console.log(error);
+      }
+    )
+  }
+  
+  salvar(){
+   this.atualizar(this.alunosForms.value)
+  }
+//=================//=================
 
   selectAluno(aluno:AlunosModel){
     this.alunoSelect = aluno //seleciona um aluno
@@ -50,10 +67,6 @@ export class AlunosComponent implements OnInit {
     this.alunoSelect = null as any;
   }
 
-  salvar(){
-    console.log(this.alunosForms.value);
-
-  }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
