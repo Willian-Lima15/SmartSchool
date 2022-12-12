@@ -1,14 +1,10 @@
 <div class="row">
   <div class="col-sm-6" *ngIf="profSelect">
-    <div class="row">
-      <div class="col-sm-10">
-        <app-titulo [titulo]="'Professores: ' + profSelect.id"></app-titulo>
-      </div>
-      <div class="col-sm-2 mt-2">
-        <button class="btn btn-warning" (click)="voltar()">Voltar</button>
-      </div>
-    </div>
-
+        <app-titulo [titulo]=" (profSelect.id === 0 ? 'Novo Professor' : 'Professores: ' + profSelect.id)">
+          <button class="btn btn-warning" (click)="voltar()">
+            Voltar
+          </button>
+        </app-titulo>
     <form [formGroup]="profForms" class="form-group" (submit)="salvar()">
       <div>
         <label class="form-label">Nome</label>
@@ -29,7 +25,11 @@
     </form>
   </div>
   <div [ngClass]="{'col-sm-12': false, 'col-sm-6':profSelect}">
-    <app-titulo [titulo]="titulo"></app-titulo>
+    <app-titulo [titulo]="titulo">
+      <button class="btn btn-success" (click)="novo()">
+        Cadastrar
+      </button>
+    </app-titulo>
     <table class="table table-hover">
       <thead class="table-dark">
         <tr>
@@ -43,7 +43,7 @@
       </thead>
       <tbody>
         <tr
-          *ngFor="let prof of professores"
+          *ngFor="let prof of professores$ | async"
         >
           <th scope="row">
             <button class="btn btn-warning ms-1"  (click)="selectProf(prof)">Detalhe</button>

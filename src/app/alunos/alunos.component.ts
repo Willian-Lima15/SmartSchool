@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { AlunoService } from './../core/services/aluno.service';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,7 +16,7 @@ export class AlunosComponent implements OnInit {
   alunoSelect!:AlunosModel;
   alunosForms!: FormGroup
 
-  alunos!: AlunosModel[];
+  alunos$!: Observable<AlunosModel[]>;
 
   modalRef?: BsModalRef;
   constructor(
@@ -35,10 +36,7 @@ export class AlunosComponent implements OnInit {
   }
 
   listaAlunos(){
-    this.alunoService.getAll().subscribe((res:any)=> {
-      console.log(res);
-      this.alunos = res
-    })
+   this.alunos$ = this.alunoService.getAll()
   }
 
 //===================//==============
@@ -68,6 +66,10 @@ export class AlunosComponent implements OnInit {
     this.alunoSelect = null as any;
   }
 
+  novo() {
+    this.alunoSelect = new AlunosModel();
+    this.alunosForms.patchValue(this.alunoSelect)
+  }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);

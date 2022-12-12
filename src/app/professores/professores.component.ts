@@ -1,6 +1,7 @@
+import { ProfessoresModel } from './../shared/professores';
+import { Observable } from 'rxjs';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { ProfessoresModel } from '../shared/professores';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ProfessorService } from '../core/services/professor.service';
 
@@ -15,7 +16,7 @@ export class ProfessoresComponent implements OnInit {
   profSelect!: ProfessoresModel;
   profForms!:FormGroup;
 
-  professores!: ProfessoresModel[];
+  professores$!: Observable<ProfessoresModel[]>
 
   modalRef?: BsModalRef;
   constructor(
@@ -36,12 +37,20 @@ export class ProfessoresComponent implements OnInit {
   }
 
   carregaProf(){
-    this.professorSerivice.getAll().subscribe((professor: ProfessoresModel[])=> {
-      console.log(professor);
+    this.professores$ = this.professorSerivice.getAll()
+  }
 
-      this.professores = professor
+  //==================///============================
+  atualizar(professor:ProfessoresModel){
+    this.professorSerivice.update(professor.id, professor).subscribe(()=>{
+      this.carregaProf();
     })
   }
+
+  salvar(){
+    this.atualizar(this.profForms.value)
+  }
+  //================///===============================
 
   selectProf(prof:ProfessoresModel) {
     this.profSelect = prof //seleciona um professor
@@ -52,9 +61,9 @@ export class ProfessoresComponent implements OnInit {
      this.profSelect =  null as any;
   }
 
-  salvar(){
-    console.log(this.profForms.value);
-
+  novo(){
+    this.profSelect = new ProfessoresModel();
+    this.profForms.patchValue(this.profSelect)
   }
 
   openModal(template: TemplateRef<any>) {
