@@ -30,6 +30,7 @@ export class AlunosComponent implements OnInit {
       sobrenome:['',Validators.required],
       phone:['',Validators.required]
     })
+    this.listaAlunos()
   }
 
   listaAlunos(){

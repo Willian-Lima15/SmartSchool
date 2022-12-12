@@ -1,7 +1,8 @@
+import { AlunosModel } from './../../shared/alunos';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import {tap} from 'rxjs/Operators'
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,12 @@ constructor(
   private http: HttpClient
   ) { }
 
-  getAll(){
-    return this.http.get(`${this.url}/aluno`).pipe(tap(res => console.log(res)
-    ))
+  getAll(): Observable<AlunosModel[]>{
+    return this.http.get<AlunosModel[]>(`${this.url}/Aluno`)
+  }
+
+  getById(id:number):Observable<AlunosModel>{
+    return this.http.get<AlunosModel>(`${this.url}/Aluno/${id}`)
   }
 
 }

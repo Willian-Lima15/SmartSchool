@@ -2,6 +2,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { ProfessoresModel } from '../shared/professores';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { ProfessorService } from '../core/services/professor.service';
 
 @Component({
   selector: 'app-professores',
@@ -14,15 +15,13 @@ export class ProfessoresComponent implements OnInit {
   profSelect!: ProfessoresModel;
   profForms!:FormGroup;
 
-  professores = [
-    {id:1 ,nome:'Tereza', disciplina: 'Português', phone:54548},
-    {id:2 ,nome:'Alisson', disciplina: 'Historia', phone:76846},
-    {id:3 ,nome:'Conceição', disciplina: 'Geografia',phone:98214},
-  ]
+  professores!: ProfessoresModel[];
+
   modalRef?: BsModalRef;
   constructor(
     private fb:FormBuilder,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private professorSerivice:ProfessorService
   ) { }
 
   ngOnInit() {
@@ -30,6 +29,14 @@ export class ProfessoresComponent implements OnInit {
       nome:['',Validators.required],
       disciplina:['',Validators.required],
       phone:['',Validators.required]
+    })
+
+    this.carregaProf()
+  }
+
+  carregaProf(){
+    this.professorSerivice.getAll().subscribe((professor: ProfessoresModel[])=> {
+      this.professores = professor
     })
   }
 
