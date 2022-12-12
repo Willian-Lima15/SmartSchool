@@ -26,6 +26,7 @@ export class AlunosComponent implements OnInit {
 
   ngOnInit() {
     this.alunosForms = this.fb.group({
+      id:[''],
       nome:['',Validators.required],
       sobrenome:['',Validators.required],
       phone:['',Validators.required]
@@ -52,7 +53,7 @@ export class AlunosComponent implements OnInit {
       }
     )
   }
-  
+
   salvar(){
    this.atualizar(this.alunosForms.value)
   }

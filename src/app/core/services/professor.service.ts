@@ -1,4 +1,3 @@
-import { AlunosModel } from './../../shared/alunos';
 import { environment } from 'src/environments/environment';
 import { ProfessoresModel } from './../../shared/professores';
 import { HttpClient } from '@angular/common/http';
@@ -9,22 +8,30 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProfessorService {
-url = environment.baseUrl
+url = `${environment.baseUrl}/Professor`
 
 constructor(
   private http: HttpClient
 ) { }
 
 getAll():Observable<ProfessoresModel[]>{
-  return this.http.get<ProfessoresModel[]>(`${this.url}/Professor`)
+  return this.http.get<ProfessoresModel[]>(`${this.url}`)
 }
 
 getById(id: number):Observable<ProfessoresModel>{
-  return this.http.get<ProfessoresModel>(`${this.url}/Professor/${id}`)
+  return this.http.get<ProfessoresModel>(`${this.url}/${id}`)
 }
 
 create(professor: ProfessoresModel){
-  return this.http.post(`${this.url}/Professor`, professor)
+  return this.http.post(`${this.url}`, professor)
+}
+
+update(id: number, professor:ProfessoresModel){
+  return this.http.put(`${this.url}/${id}`, professor)
+}
+
+delete(id:number) {
+  return this.http.delete(`${this.url}/${id}`)
 }
 
 }

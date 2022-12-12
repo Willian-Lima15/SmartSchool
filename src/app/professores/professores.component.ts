@@ -30,7 +30,7 @@ export class ProfessoresComponent implements OnInit {
       nome:['',Validators.required],
       disciplina:['',Validators.required],
       phone:['',Validators.required]
-    })
+    });
 
     this.carregaProf()
   }
