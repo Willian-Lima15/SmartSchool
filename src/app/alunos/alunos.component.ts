@@ -14,7 +14,8 @@ export class AlunosComponent implements OnInit {
 
   titulo = 'Alunos'
   alunoSelect!:AlunosModel;
-  alunosForms!: FormGroup
+  alunosForms!: FormGroup;
+  modo = 'post';
 
   alunos$!: Observable<AlunosModel[]>;
 
@@ -41,8 +42,8 @@ export class AlunosComponent implements OnInit {
 
 //===================//==============
   atualizar(aluno: AlunosModel){
-    this.alunoService.update(aluno.id, aluno).subscribe(
-      (res)=>{
+    this.alunoService.save(aluno).subscribe(
+      (res:any)=>{
         console.log(res);
         this.listaAlunos()
       },

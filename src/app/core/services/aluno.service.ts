@@ -23,12 +23,20 @@ constructor(
     return this.http.get<AlunosModel>(`${this.url}/${id}`)
   }
 
-  create(aluno: AlunosModel) {
+  save(aluno: AlunosModel){
+    if(aluno.id){
+      return this.update(aluno)
+    }else {
+      return this.create(aluno)
+    }
+  }
+  private create(aluno: AlunosModel) {
     return this.http.post(`${this.url}`, aluno)
   }
 
-  update(id: number, aluno: AlunosModel){
-    return this.http.put(`${this.url}/${id}`, aluno)
+
+  private update(aluno: AlunosModel){
+    return this.http.put(`${this.url}/${aluno.id}`, aluno)
   }
 
   delete(id:number){
