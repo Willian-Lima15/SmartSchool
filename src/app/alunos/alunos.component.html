@@ -29,7 +29,7 @@
 
   <div [ngClass]="{'col-sm-12':false,'col-sm-6':alunoSelect}">
     <app-titulo [titulo]="titulo">
-      <button class="btn btn-success" (click)="novo()">
+      <button class="btn btn-success" (click)="novoAluno()">
         Cadastrar
       </button>
     </app-titulo>
@@ -57,7 +57,7 @@
           <td>{{ aluno.phone }}</td>
           <td>
             <button class="btn btn-outline-primary ms-1" (click)="openModal(template)">Professores</button>
-            <button class="btn btn-danger ms-1">Deletar</button>
+            <button class="btn btn-danger ms-1"(click)="deletar(aluno.id)">Deletar</button>
           </td>
         </tr>
       </tbody>

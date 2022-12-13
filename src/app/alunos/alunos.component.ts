@@ -33,7 +33,7 @@ export class AlunosComponent implements OnInit {
       sobrenome:['',Validators.required],
       phone:['',Validators.required]
     })
-    this.listaAlunos()
+    this.listaAlunos();
   }
 
   listaAlunos(){
@@ -67,9 +67,18 @@ export class AlunosComponent implements OnInit {
     this.alunoSelect = null as any;
   }
 
-  novo() {
+  novoAluno() {
     this.alunoSelect = new AlunosModel();
     this.alunosForms.patchValue(this.alunoSelect)
+  }
+
+  deletar(id: number){
+    this.alunoService.delete(id).subscribe(
+      (res) => {
+        console.log(res);
+        this.listaAlunos();
+      }
+    )
   }
 
   openModal(template: TemplateRef<any>) {

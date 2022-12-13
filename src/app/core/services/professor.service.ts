@@ -22,12 +22,20 @@ getById(id: number):Observable<ProfessoresModel>{
   return this.http.get<ProfessoresModel>(`${this.url}/${id}`)
 }
 
-create(professor: ProfessoresModel){
+save(professor: ProfessoresModel){
+  if(professor.id){
+    return this.update(professor)
+  }else {
+    return this.create(professor)
+  }
+}
+
+private create(professor: ProfessoresModel){
   return this.http.post(`${this.url}`, professor)
 }
 
-update(id: number, professor:ProfessoresModel){
-  return this.http.put(`${this.url}/${id}`, professor)
+private update(professor:ProfessoresModel){
+  return this.http.put(`${this.url}/${professor.id}`, professor)
 }
 
 delete(id:number) {

@@ -42,7 +42,7 @@ export class ProfessoresComponent implements OnInit {
 
   //==================///============================
   atualizar(professor:ProfessoresModel){
-    this.professorSerivice.update(professor.id, professor).subscribe(()=>{
+    this.professorSerivice.save(professor).subscribe(()=>{
       this.carregaProf();
     })
   }
